@@ -1,0 +1,151 @@
+[{
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"-90",
+      "z":"10",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "False"
+      }
+    },
+    "unixtime":1687076444
+  },
+  {
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"-90",
+      "z":"-43",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "False"
+      }
+    },
+    "unixtime":1687076444
+  },
+  {
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"-90",
+      "z":"-43",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "True"
+      }
+    },
+    "unixtime":1687076444
+  },
+  {
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"110",
+      "z":"43",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "True"
+      }
+    },
+    "unixtime":1687076444
+  },
+  {
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"110",
+      "z":"-10",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "False"
+      }
+    },
+    "unixtime":1687076444
+  },
+  {
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"10",
+      "z":"10",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "False"
+      }
+    },
+    "unixtime":1687076444
+  },
+  {
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"10",
+      "z":"-43",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "False"
+      }
+    },
+    "unixtime":1687076444
+  },
+  {
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"10",
+      "z":"-43",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "True"
+      }
+    },
+    "unixtime":1687076444
+  },
+  {
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"10",
+      "z":"10",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "True"
+      }
+    },
+    "unixtime":1687076444
+  },
+  {
+    "nodeID": "dobot-l-01",
+    "data": {
+      "x":"330",
+      "y":"110",
+      "z":"0",
+      "r":0.7,
+      "status": "True",
+      "endEffector":{
+          "type": "suck",
+          "enable": "False"
+      }
+    },
+    "unixtime":1687076444
+  }
+]
