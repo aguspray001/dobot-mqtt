@@ -35,7 +35,7 @@ if len(available_ports) > 0:
     client = paho.Client(paho.CallbackAPIVersion.VERSION1)
     client.on_message = message_handling
 
-    if client.connect("10.0.2.15", 1887, 60) != 0:
+    if client.connect("103.106.72.182", 8885, 60) != 0:
         print("Couldn't connect to the mqtt broker")
         sys.exit(1)
 
