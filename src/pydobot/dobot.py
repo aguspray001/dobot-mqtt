@@ -23,6 +23,8 @@ class Dobot:
                                  parity=serial.PARITY_NONE,
                                  stopbits=serial.STOPBITS_ONE,
                                  bytesize=serial.EIGHTBITS)
+        self.response = ''
+        self.isFinish = False
         is_open = self.ser.isOpen()
         if self.verbose:
             print('pydobot: %s open' % self.ser.name if is_open else 'failed to open serial port')
@@ -41,8 +43,8 @@ class Dobot:
     def _get_queued_cmd_current_index(self):
         msg = Message()
         msg.id = CommunicationProtocolIDs.GET_QUEUED_CMD_CURRENT_INDEX
-        response = self._send_command(msg)
-        idx = struct.unpack_from('L', response.params, 0)[0]
+        self.response = self._send_command(msg)
+        idx = struct.unpack_from('L', self.response.params, 0)[0]
         return idx
 
     """
@@ -51,15 +53,15 @@ class Dobot:
     def _get_pose(self):
         msg = Message()
         msg.id = CommunicationProtocolIDs.GET_POSE
-        response = self._send_command(msg)
-        self.x = struct.unpack_from('f', response.params, 0)[0]
-        self.y = struct.unpack_from('f', response.params, 4)[0]
-        self.z = struct.unpack_from('f', response.params, 8)[0]
-        self.r = struct.unpack_from('f', response.params, 12)[0]
-        self.j1 = struct.unpack_from('f', response.params, 16)[0]
-        self.j2 = struct.unpack_from('f', response.params, 20)[0]
-        self.j3 = struct.unpack_from('f', response.params, 24)[0]
-        self.j4 = struct.unpack_from('f', response.params, 28)[0]
+        self.response = self._send_command(msg)
+        self.x = struct.unpack_from('f', self.response.params, 0)[0]
+        self.y = struct.unpack_from('f', self.response.params, 4)[0]
+        self.z = struct.unpack_from('f', self.response.params, 8)[0]
+        self.r = struct.unpack_from('f', self.response.params, 12)[0]
+        self.j1 = struct.unpack_from('f', self.response.params, 16)[0]
+        self.j2 = struct.unpack_from('f', self.response.params, 20)[0]
+        self.j3 = struct.unpack_from('f', self.response.params, 24)[0]
+        self.j4 = struct.unpack_from('f', self.response.params, 28)[0]
 
         if self.verbose:
             print("pydobot: x:%03.1f \
@@ -71,9 +73,19 @@ class Dobot:
                             j3:%03.1f \
                             j4:%03.1f" %
                   (self.x, self.y, self.z, self.r, self.j1, self.j2, self.j3, self.j4))
-        return response
+        return self.response
 
     def _read_message(self):
+        time.sleep(0.1)
+        b = self.ser.read_all()
+        if len(b) > 0:
+            msg = Message(b)
+            if self.verbose:
+                print('pydobot: <<', msg)
+            return msg
+        return
+
+    def get_response(self):
         time.sleep(0.1)
         b = self.ser.read_all()
         if len(b) > 0:
@@ -86,13 +98,13 @@ class Dobot:
     def _send_command(self, msg, wait=False):
         self.lock.acquire()
         self._send_message(msg)
-        response = self._read_message()
+        self.response = self._read_message()
         self.lock.release()
 
         if not wait:
-            return response
+            return self.response
 
-        expected_idx = struct.unpack_from('L', response.params, 0)[0]
+        expected_idx = struct.unpack_from('L', self.response.params, 0)[0]
         if self.verbose:
             print('pydobot: waiting for command', expected_idx)
 
@@ -105,9 +117,10 @@ class Dobot:
 
             if self.verbose:
                 print('pydobot: command %d executed' % current_idx)
+                self.isFinish = True
             break
 
-        return response
+        return self.response
 
     def _send_message(self, msg):
         time.sleep(0.1)
@@ -323,13 +336,13 @@ class Dobot:
         self._set_wait_cmd(ms)
 
     def pose(self):
-        response = self._get_pose()
-        x = struct.unpack_from('f', response.params, 0)[0]
-        y = struct.unpack_from('f', response.params, 4)[0]
-        z = struct.unpack_from('f', response.params, 8)[0]
-        r = struct.unpack_from('f', response.params, 12)[0]
-        j1 = struct.unpack_from('f', response.params, 16)[0]
-        j2 = struct.unpack_from('f', response.params, 20)[0]
-        j3 = struct.unpack_from('f', response.params, 24)[0]
-        j4 = struct.unpack_from('f', response.params, 28)[0]
+        self.response = self._get_pose()
+        x = struct.unpack_from('f', self.response.params, 0)[0]
+        y = struct.unpack_from('f', self.response.params, 4)[0]
+        z = struct.unpack_from('f', self.response.params, 8)[0]
+        r = struct.unpack_from('f', self.response.params, 12)[0]
+        j1 = struct.unpack_from('f', self.response.params, 16)[0]
+        j2 = struct.unpack_from('f', self.response.params, 20)[0]
+        j3 = struct.unpack_from('f', self.response.params, 24)[0]
+        j4 = struct.unpack_from('f', self.response.params, 28)[0]
         return x, y, z, r, j1, j2, j3, j4
