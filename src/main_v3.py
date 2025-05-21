@@ -34,11 +34,11 @@ if len(available_ports) > 0:
                 device.move_joint_to(int(float(data['j1'])),int(float(data['j2'])), int(float(data['j3'])), int(float(data['j4'])), wait=str.lower(data["status"] )== 'true')
             else:
                 device.move_to(int(float(data['x'])),int(float(data['y'])), int(float(data['z'])), int(float(data['r'])), wait=str.lower(data["status"] )== 'true')
-            match endEffector['type']:
-                case "grip":
-                    device.grip(enable=str.lower(endEffector['enable']) == 'true')
-                case "suck":
-                    device.suck(enable=str.lower(endEffector['enable']) == 'true')
+            
+            if endEffector['type'] == "grip":
+                device.grip(enable=str.lower(endEffector['enable']) == 'true')
+            if endEffector['type'] == "suck":
+                device.suck(enable=str.lower(endEffector['enable']) == 'true')
         prevData = str(msg.payload.decode()[:-23])
             
     # mqtt handling
